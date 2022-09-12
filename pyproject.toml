@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "pandas>=1.4.4", "SQLAlchemy>=1.4.41", "Django>=4.1.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "pandas_orm"
-version = "0.0.3"
+version = "0.0.4"
 authors = [
   { name="Ilya Shusterman", email="shusterilyaman@gmail.com" },
 ]
