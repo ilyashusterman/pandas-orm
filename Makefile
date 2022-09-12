@@ -71,5 +71,9 @@ migrate_version:
 .PHONY: shutdown
 shutdown:
 	$(VERBOSE) docker-compose down
+.PHONY: build_pkg
+build_pkg:
+	$(VERBOSE) python3 -m build
+	$(VERBOSE) python3 -m twine upload --repository pypi dist/*
 
 
