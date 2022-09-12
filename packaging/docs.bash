@@ -1,1 +1,1 @@
-pdoc src/pandas_orm
+pdoc pandas_orm -o ../docs
