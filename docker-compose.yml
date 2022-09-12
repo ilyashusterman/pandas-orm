@@ -1,0 +1,49 @@
+version: "3.9"
+
+
+services:
+
+  ################################
+  ###         Services         ###
+  ################################
+
+  django:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./django_backend/Dockerfile
+    environment:
+      - DB_HOST=postgres_db_local
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./:/django_backend
+    ports:
+      - 8000:8000
+    networks:
+      - pandas-network
+
+
+  postgres_db_local:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./docker_services/postgres/Dockerfile
+    ports:
+    - 5432:5432
+    command:
+      - "postgres"
+      - "-c"
+      - "config_file=/etc/postgresql/postgresql.conf"
+    volumes:
+      - ./docker_services/postgres/data/:/var/lib/postgresql/
+      - ./docker_services/postgres/mock_db/:/docker_services/postgres/mock_db/
+      - ./docker_services/postgres/scripts/:/docker-entrypoint-initdb.d/
+      - ./docker_services/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./docker_services/postgres/main/pg_hba.conf:/etc/postgresql/main/pg_hba.conf
+      - ./docker_services/postgres/mock_db/:/mock_db/
+    networks:
+      - pandas-network
+
+networks:
+  pandas-network:
+    driver: bridge
