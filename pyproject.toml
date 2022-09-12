@@ -17,12 +17,11 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-
-[project.urls]
-"Homepage" = "https://github.com/ilyashusterman/pandas-orm"
-"Bug Tracker" = "https://github.com/ilyashusterman/pandas-orm/issues"
-[project]
 dependencies = [
     'pandas >= 1.4.4',
     "SQLAlchemy >= 1.4.41; Django >= 4.1.1",
 ]
+
+[project.urls]
+"Homepage" = "https://github.com/ilyashusterman/pandas-orm"
+"Bug Tracker" = "https://github.com/ilyashusterman/pandas-orm/issues"
