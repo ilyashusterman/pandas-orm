@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=61.0", "pandas>=1.4.4", "SQLAlchemy>=1.4.41", "Django>=4.1.1"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "pandas_orm"
-version = "0.0.4"
+version = "0.0.5"
 authors = [
   { name="Ilya Shusterman", email="shusterilyaman@gmail.com" },
 ]
@@ -21,3 +21,8 @@ classifiers = [
 [project.urls]
 "Homepage" = "https://github.com/ilyashusterman/pandas-orm"
 "Bug Tracker" = "https://github.com/ilyashusterman/pandas-orm/issues"
+[project]
+dependencies = [
+    'pandas >= 1.4.4',
+    "SQLAlchemy >= 1.4.41; Django >= 4.1.1",
+]
