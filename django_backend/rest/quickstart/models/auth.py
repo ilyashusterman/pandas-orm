@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User as DJUser
 
-from src.pandas_orm.django.model import DataFrameManager
+from pandas_orm.django.model import DataFrameManager
 
 
 class User(DJUser):

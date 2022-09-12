@@ -3,7 +3,7 @@ import unittest
 
 from pandas import DataFrame
 
-from src.pandas_orm.sqlalchemy.model_manager import ModelManager
+from pandas_orm.sqlalchemy.model_manager import ModelManager
 from sqlalchemy_backend.config import DB_URL
 from sqlalchemy_backend.models.collaborator import Collaborator
 
@@ -42,6 +42,11 @@ class TestDataBase(unittest.TestCase):
         self.assertEqual(saved['last_name'].iloc[0], df['last_name'].iloc[0])
         self.assertNotEqual(saved['id'].iloc[0], None)
         self.assertNotEqual(saved['id'].iloc[0], df_before['last_name'].iloc[0])
+
+    def test_get(self):
+        email = "test@test.test"
+        entity = self.db.get(email=email)
+        self.assertEqual(entity['email'].iloc[0], email)
 
 
 if __name__ == '__main__':

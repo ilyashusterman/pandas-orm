@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
-from src.pandas_orm.django.setup import get_django_db
+from pandas_orm.django.setup import get_django_db
 
 DB_HOST = os.environ.get('DB_HOST', 'localhost')
 DB_URL = os.environ.get('DATABASE_URL', f'postgresql://docker:localone@{DB_HOST}:5432/local_database')

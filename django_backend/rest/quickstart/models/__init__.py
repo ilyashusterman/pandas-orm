@@ -8,7 +8,7 @@ try:
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rest.settings')
 
         application = get_asgi_application()
-        from src.pandas_orm.django.db import models
+        from pandas_orm.django.db import models
     except ModuleNotFoundError as e:
         raise e
 except RuntimeError as e:

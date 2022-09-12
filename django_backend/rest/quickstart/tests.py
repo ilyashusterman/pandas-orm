@@ -1,6 +1,6 @@
 import unittest
 
-from src.pandas_orm.django.django_dataframe import DataFrame
+from pandas_orm.django.django_dataframe import DataFrame
 
 import models as test_models
 

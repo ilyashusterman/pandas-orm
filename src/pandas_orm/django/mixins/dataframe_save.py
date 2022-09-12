@@ -2,7 +2,7 @@ from typing import List
 
 from pandas import DataFrame
 
-from src.pandas_orm.django.mixins.base_model_fields_mixin import BaseModelFieldsMixin
+from pandas_orm.django.mixins.base_model_fields_mixin import BaseModelFieldsMixin
 
 
 class DataFrameSaveMixin:

@@ -1,7 +1,8 @@
-from src.pandas_orm.django.db import models
+from django.db import models
+from pandas_orm.django.db import Model
 
 
-class Collaborator(models.Model):
+class Collaborator(Model):
     name = models.CharField(max_length=200)
     first_name = models.CharField(max_length=200, null=True)
     last_name = models.CharField(max_length=200, null=True)

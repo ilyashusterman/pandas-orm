@@ -2,9 +2,9 @@ import time
 import logging
 from functools import wraps
 
-from .exceptions import PandasDBAlchemyUpdateColumnsNotSupported
+from pandas_orm.sqlalchemy.exceptions import PandasDBAlchemyUpdateColumnsNotSupported
 
-from .dataframe import DataFrame
+from pandas_orm.sqlalchemy.dataframe import DataFrame
 from sqlalchemy.dialects.postgresql import insert
 
 

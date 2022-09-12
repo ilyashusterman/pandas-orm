@@ -1,4 +1,4 @@
-from src.pandas_orm.exceptions import PandasDBError
+from pandas_orm.base.exceptions import PandasDBError
 
 
 class PandasDBAlchemyDataBaseError(PandasDBError):
