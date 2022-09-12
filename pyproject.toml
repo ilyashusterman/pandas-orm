@@ -18,8 +18,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    'pandas >= 1.4.4',
-    "SQLAlchemy >= 1.4.41; Django >= 4.1.1",
+    "pandas >= 1.4.4",
+    "SQLAlchemy >= 1.4.41",
+    "Django >= 4.1.1"
 ]
 
 [project.urls]
