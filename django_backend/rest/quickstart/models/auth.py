@@ -5,6 +5,7 @@ from pandas_orm.django.model import DataFrameManager
 
 class User(DJUser):
     objects = DataFrameManager()
+
     class Meta:
         app_label = 'rest.quickstart'
         proxy = True

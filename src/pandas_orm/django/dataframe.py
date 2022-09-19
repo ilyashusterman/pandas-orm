@@ -11,22 +11,31 @@ class DataFrame(BaseDataFrame):
         :param __model__: pandas_orm.django.Model
     """
 
+    def __init__(self, *args, orm_model=None, **kwargs):
+        """
+        :param args: default pandas.DataFrame args
+        :param orm_model: pandas_orm.django.Model or from django.db.models import Model
+        :param kwargs: default pandas.DataFrame kwargs
+        """
+        super(__class__, self).__init__(*args, **kwargs)
+        self.__model__: Model = orm_model
+
     def to_objects(self):
         return [self.model(**record) for record in self.to_dict('records')]
 
-    def bulk_update(self, fields, batch_size=None, model=None):
+    def bulk_update(self, fields=None, batch_size=None, model=None):
         """
         :param fields: List[str] fields to update for each records in the table
         :param batch_size: integer
         :param model: pandas_orm.django.Model
         :return:
         """
-        if not self.model.objects.__class__.__name__ == 'DataFrameManager':
-            raise DataFrameModelNotSpecified()
+        model = self.validate_dataframe_orm(model)
         if self.empty:
             return self
 
-        return self.model.objects.bulk_update(self, fields, batch_size, model=model)
+        return self.model.objects.bulk_update(self, fields, batch_size,
+                                              model=model)
 
     def bulk_create(self, *args, model=None, **kwargs):
         """
@@ -35,12 +44,16 @@ class DataFrame(BaseDataFrame):
         :param model: pandas_orm.django.Model
         :return:
         """
-        model = model if model else self.model
-        if not model.objects.__class__.__name__ == 'DataFrameManager':
-            raise DataFrameModelNotSpecified()
+        model = self.validate_dataframe_orm(model)
         if self.empty:
             return self
         return model.objects.bulk_create(self, *args, **kwargs)
+
+    def validate_dataframe_orm(self, model=None):
+        model = model if model else self.model
+        if not model.objects.__class__.__name__ == 'DataFrameManager':
+            raise DataFrameModelNotSpecified()
+        return model
 
 
 def is_dataframe(records):

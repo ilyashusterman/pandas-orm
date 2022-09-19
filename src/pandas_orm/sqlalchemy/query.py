@@ -3,6 +3,7 @@ from functools import wraps
 
 import sqlalchemy
 from pandas import read_sql, concat
+from pandas import DataFrame as PDDataFrame
 from sqlalchemy.orm import Query
 
 from pandas_orm.base.log import get_logger
@@ -34,6 +35,14 @@ def to_dataframe_gen(func):
     return wrapper
 
 
+def initialize_queryset_dataframe(df: PDDataFrame, query: Query):
+    if len(query.column_descriptions) == 1:
+        column_description = query.column_descriptions[0]
+        if column_description['aliased'] is False:
+            return DataFrame(df, orm_model=column_description['entity'])
+    return DataFrame(df)
+
+
 def to_dataframe(func):
     """
     Annotation that wraps function that returns sqlalchemy.orm.query.Query
@@ -46,7 +55,7 @@ def to_dataframe(func):
     def wrapper(*args, **kwargs):
         query = func(*args, **kwargs)
         df = query_to_dataframe(query)
-        wrapped_df = DataFrame(df)
+        wrapped_df = initialize_queryset_dataframe(df, query)
         if args and args[0].__class__.__name__ == 'ModelManager':
             wrapped_df.model_manager = args[0]
             wrapped_df.__model__ = wrapped_df.model_manager.model

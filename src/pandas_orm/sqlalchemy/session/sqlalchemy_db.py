@@ -21,6 +21,7 @@ def get_global_instance_db(db_url):
 
 class DatabaseSession:
     """
+    responsible to handle engine scope and session scope with sqlalchemy frameworke
     Usage:
     In [0]: db = DatabaseSession(url)
     In [1]: with db.session() as session:
@@ -39,11 +40,17 @@ class DatabaseSession:
         self.engine_scope_func = engine_scope_func
 
     def session(self):
+        """
+        :return: session scope function context
+        """
         if self.session_scope_func:
             return self.session_scope_func()
         return session_scope(self.url)
 
     def engine(self):
+        """
+        :return: engine scope function context
+        """
         if self.engine_scope_func:
             return self.engine_scope_func()
         engine = engine_scope(self.url)
@@ -51,6 +58,7 @@ class DatabaseSession:
 
     @classmethod
     def get_db_session(cls, url):
+        """ initialize global variable singleton """
         return get_global_instance_db(url)
 
 

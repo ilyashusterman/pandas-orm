@@ -2,9 +2,9 @@ from typing import List
 from sqlalchemy import UniqueConstraint
 
 
-class ModelSaveArguments:
+class NativeModelSaveArguments:
 
-    def __init__(self, model, records, unique_fields=None, update_fields=None):
+    def __init__(self, records, model, unique_fields=None, update_fields=None):
         self.model = model
         self.records = records
         self.unique_fields = unique_fields

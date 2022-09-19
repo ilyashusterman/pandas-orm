@@ -3,7 +3,7 @@ import logging
 from pandas import DataFrame
 
 from pandas_orm.sqlalchemy.execute_sql import DataFrameExecuteSql
-from pandas_orm.sqlalchemy.crud.model_save_arguments import ModelSaveArguments
+from pandas_orm.sqlalchemy.crud.naive_save_arguments import NativeModelSaveArguments
 
 
 class ModelDataFrameManager:
@@ -11,13 +11,24 @@ class ModelDataFrameManager:
     @classmethod
     def bulk_save(cls, records, model, engine_context_func, unique_fields=None,
                    update_fields=None, returning_id=False):
+        """
+        :param records: DataFrame or collection
+        :param model: sqlalchemy.orm.declarative_base
+        :param engine_context_func: engine_scope context
+        :param unique_fields: List[field..]
+        :param update_fields: List[field..]
+        :param returning_id: bool
+        :return: saved DataFrame
+        """
         records = cls._prepare_records(records)
         if records.empty:
             return records
         logging.info(f'Saving {records.shape[0]} {model.__name__} records')
-        kwargs = ModelSaveArguments(model=model, records=records,
-                                    unique_fields=unique_fields,
-                                    update_fields=update_fields).get_args()
+        kwargs = NativeModelSaveArguments(
+            records=records,
+            model=model,
+            unique_fields=unique_fields,
+            update_fields=update_fields).get_args()
         with engine_context_func() as engine:
             kwargs['engine'] = engine
             new_records = records

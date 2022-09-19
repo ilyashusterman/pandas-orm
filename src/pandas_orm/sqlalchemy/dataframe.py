@@ -16,8 +16,17 @@ def is_dataframe(records):
 
 
 class DataFrame(BaseDataFrame):
-    __model__: declarative_base = None
-    model_manager = None
+
+    def __init__(self, *args, orm_model=None, model_manager=None, **kwargs):
+        """
+        :param args: default pandas.DataFrame args
+        :param orm_model: declarative_base
+        :param model_manager: pandas_orm.sqlalchemy.model_manager.ModelManager not required
+        :param kwargs: default pandas.DataFrame kwargs
+        """
+        super(__class__, self).__init__(*args, **kwargs)
+        self.__model__: declarative_base = orm_model
+        self.model_manager = model_manager
 
     def get_model(self, model=None):
         if model:
@@ -49,7 +58,7 @@ class DataFrame(BaseDataFrame):
                 returning_id=returning_id,
             )
             return initialized_dataframe_model(df, model)
-        return self.model_manager.bulk_save(
+        return self.model_manager.bulk_create(
             self,
             unique_fields=unique_fields,
             update_fields=update_fields,
@@ -68,12 +77,11 @@ def initialized_dataframe(records, model_manager=None) -> DataFrame:
     :return: pandas_orm.sqlalchemy.dataframe.DataFrame
     """
     if isinstance(records, list):
-        records = DataFrame(records)
+        records = DataFrame(records, orm_model=model_manager.model, model_manager=model_manager)
     if not is_dataframe(records):
         raise NotImplementedError(type(records))
-    df = DataFrame(records)
-    setattr(df, 'model_manager', model_manager)
-    setattr(df, '__model__', model_manager.model)
+
+    df = DataFrame(records, orm_model=model_manager.model, model_manager=model_manager)
     return df
 
 
@@ -87,6 +95,5 @@ def initialized_dataframe_model(records, model) -> DataFrame:
         records = DataFrame(records)
     if not is_dataframe(records):
         raise NotImplementedError(type(records))
-    df = DataFrame(records)
-    setattr(df, '__model__', model)
+    df = DataFrame(records, orm_model=model)
     return df

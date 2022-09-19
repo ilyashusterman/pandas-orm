@@ -194,6 +194,27 @@
 </dl>
 </dd></dl>
 
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from pandas_orm.django.query import query_to_dataframe</span>
+
+<span class="go">@to_dataframe</span>
+<span class="go">def get_queryset()</span>
+<span class="go">    return Collaborator.objects.all()</span>
+
+<span class="go">df = get_queryset()</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="pandas_orm.django.query.to_dataframe">
+<span class="sig-prename descclassname"><span class="pre">pandas_orm.django.query.</span></span><span class="sig-name descname"><span class="pre">to_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.query.to_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Annotation that wraps django.db.models.QuerySet reads to a DataFrame
+:param func: function that returns django.db.models.QuerySet
+:return: DataFrame</p>
+</dd></dl>
+
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from pandas_orm.django.query import to_dataframe</span>
+<span class="go">df = query_to_dataframe(Collaborator.objects.all())</span>
+</pre></div>
+</div>
 <p>you can use the <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">pandas_orm.django.db</span> <span class="pre">import</span> <span class="pre">Model</span></code> class:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from django.db import models</span>
 <span class="go">from pandas_orm.django.db import Model</span>
@@ -209,6 +230,72 @@
 
 <span class="go">collaborators = test_models.Collaborator.objects.all()</span>
 <span class="go">df = collaborators.to_dataframe()</span>
+<span class="go">df[&#39;last_name&#39;] = &#39;test&#39;</span>
+<span class="go">test_models.Collaborator.bulk_update(df, fields=[&#39;last_name&#39;])</span>
+<span class="gp"># </span>or naive way
+<span class="go">test_models.Collaborator.bulk_update(df)</span>
+</pre></div>
+</div>
+<p>you can use the <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">pandas_orm.django.dataframe</span> <span class="pre">import</span> <span class="pre">DataFrame</span></code> class:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pandas_orm.django.dataframe.DataFrame">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pandas_orm.django.dataframe.</span></span><span class="sig-name descname"><span class="pre">DataFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orm_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.dataframe.DataFrame" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="pandas_orm.django.dataframe.DataFrame.bulk_create">
+<span class="sig-name descname"><span class="pre">bulk_create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.dataframe.DataFrame.bulk_create" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> – extended bulk_create args</p></li>
+<li><p><strong>kwargs</strong> – extended bulk_create kwargs</p></li>
+<li><p><strong>model</strong> – pandas_orm.django.Model</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pandas_orm.django.dataframe.DataFrame.bulk_update">
+<span class="sig-name descname"><span class="pre">bulk_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.dataframe.DataFrame.bulk_update" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fields</strong> – List[str] fields to update for each records in the table</p></li>
+<li><p><strong>batch_size</strong> – integer</p></li>
+<li><p><strong>model</strong> – pandas_orm.django.Model</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from pandas_orm.django.dataframe import DataFrame</span>
+
+<span class="go">last_name = &quot;collaborator_bulk_create_with_specified_model_naive&quot;</span>
+<span class="go">df_new = DataFrame([dict(</span>
+<span class="go">    name=&quot;myname&quot;,</span>
+<span class="go">    email=&quot;test@test.test&quot;,</span>
+<span class="go">    last_name=last_name</span>
+<span class="go">)], orm_model=models.Collaborator)</span>
+<span class="gp">#</span><span class="c1">##################</span>
+<span class="gp">#</span><span class="c1">## bulk_create ###</span>
+<span class="gp">#</span><span class="c1">##################</span>
+<span class="go">created = df_new.bulk_create()</span>
+
+<span class="go">objs = models.Collaborator.objects.all()</span>
+<span class="go">df_update = objs.to_dataframe()</span>
+<span class="go">df_update[&#39;last_name&#39;] = last_name</span>
+<span class="gp">#</span><span class="c1">##################</span>
+<span class="gp">#</span><span class="c1">## bulk_update ###</span>
+<span class="gp">#</span><span class="c1">##################</span>
+<span class="go">updated = df_update.bulk_update()</span>
 </pre></div>
 </div>
 </section>

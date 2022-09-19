@@ -24,7 +24,7 @@
   <link rel="index" title="Index" href="genindex.html" />
   <link rel="search" title="Search" href="search.html" />
   <link rel="next" title="Django usage" href="django_usage.html" />
-  <link rel="prev" title="Installation" href="usage.html" /> 
+  <link rel="prev" title="Installation" href="installation.html" /> 
   </head>
 
   <body>
@@ -48,9 +48,9 @@
     </div>
   
     <div class="nav-item">
-      <a href="usage.html#installation"
+      <a href="usage.html#"
          class="nav-link  router-link-active">
-         installation
+         None
       </a>
     </div>
   
@@ -78,9 +78,9 @@
     </div>
   
     <div class="nav-item">
-      <a href="usage.html#installation"
+      <a href="usage.html#"
          class="nav-link  router-link-active">
-         installation
+         None
       </a>
     </div>
   
@@ -112,9 +112,18 @@
   
     <div class="sidebar-group">
       <p class="caption">
-        <span class="caption-text"><a href="usage.html#installation">installation</a></span>
+        <span class="caption-text"><a href="usage.html#">None</a></span>
       </p>
       <ul class="current">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="installation.html" class="reference internal ">Installation</a>
+            
+
+            
+          </li>
+
         
           <li class="toctree-l1 current">
             
@@ -152,7 +161,7 @@
   <ul class="breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
     
-      <li><a href="usage.html">Installation</a> &raquo;</li>
+      <li><a href="usage.html">&lt;no title&gt;</a> &raquo;</li>
     
     <li>sqlalchemy usage</li>
   </ul>
@@ -160,7 +169,7 @@
 
   <ul class="page-nav">
   <li class="prev">
-    <a href="usage.html"
+    <a href="installation.html"
        title="previous chapter">← Installation</a>
   </li>
   <li class="next">
@@ -186,6 +195,53 @@
 :rtype: DataFrame</p>
 </dd></dl>
 
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from sqlalchemy.orm import sessionmaker</span>
+<span class="go">from sqlalchemy import create_engine</span>
+
+<span class="go">from pandas_orm.sqlalchemy.query import query_to_dataframe</span>
+
+<span class="go">engine = create_engine(db_url)</span>
+<span class="go">Session = sessionmaker(bind=engine)</span>
+<span class="go">conn = engine.connect()</span>
+<span class="go">session = Session(bind=conn)</span>
+
+<span class="go">dataframe = query_to_dataframe(session.query(Collaborator))</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.query.to_dataframe">
+<span class="sig-prename descclassname"><span class="pre">pandas_orm.sqlalchemy.query.</span></span><span class="sig-name descname"><span class="pre">to_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.query.to_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Annotation that wraps function that returns sqlalchemy.orm.query.Query</dt><dd><p>reads it to a dataframe</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>func</strong> – function that returns sqlalchemy.Session.query</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from sqlalchemy.orm import sessionmaker</span>
+<span class="go">from sqlalchemy import create_engine</span>
+
+<span class="go">from pandas_orm.sqlalchemy.query import to_dataframe</span>
+
+<span class="go">engine = create_engine(db_url)</span>
+<span class="go">Session = sessionmaker(bind=engine)</span>
+<span class="go">conn = engine.connect()</span>
+<span class="go">session = Session(bind=conn)</span>
+
+<span class="go">@to_dataframe</span>
+<span class="go">def get_all_objects():</span>
+<span class="go">    return session.query(Collaborator)</span>
+
+<span class="go">df = get_all_objects()</span>
+</pre></div>
+</div>
 <p>you can use the <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">pandas_orm.sqlalchemy.model_manager</span> <span class="pre">import</span> <span class="pre">ModelManager</span></code> class:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pandas_orm.sqlalchemy.model_manager.ModelManager">
@@ -218,6 +274,46 @@
 <span class="go">    print(df.to_string())</span>
 </pre></div>
 </div>
+<dl class="py class">
+<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pandas_orm.sqlalchemy.session.sqlalchemy_db.</span></span><span class="sig-name descname"><span class="pre">DatabaseSession</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session_scope_func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine_scope_func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession" title="Permalink to this definition">¶</a></dt>
+<dd><p>responsible to handle engine scope and session scope with sqlalchemy frameworke
+Usage:
+In [0]: db = DatabaseSession(url)
+In [1]: with db.session() as session:</p>
+<blockquote>
+<div><p>…:     result = session.execute(‘select * from collaborator where id=144’)</p>
+</div></blockquote>
+<p>In [2]: result.fetchall()
+Out[2]: [(1, u’name name’, u’test test’,…]</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession.engine">
+<span class="sig-name descname"><span class="pre">engine</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession.engine" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>engine scope function context</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession.get_db_session">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_db_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession.get_db_session" title="Permalink to this definition">¶</a></dt>
+<dd><p>initialize global variable singleton</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession.session">
+<span class="sig-name descname"><span class="pre">session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession.session" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>session scope function context</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -226,7 +322,7 @@
           <div class="page-nav">
             <div class="inner"><ul class="page-nav">
   <li class="prev">
-    <a href="usage.html"
+    <a href="installation.html"
        title="previous chapter">← Installation</a>
   </li>
   <li class="next">

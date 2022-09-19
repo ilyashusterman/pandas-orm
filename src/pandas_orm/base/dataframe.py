@@ -6,7 +6,10 @@ from pandas_orm.base.exceptions import DataFrameModelNotSpecified
 
 
 class BaseDataFrame(PDDataFrame):
-    __model__ = None
+
+    def __init__(self, *args, orm_model=None, **kwargs):
+        super(__class__, self).__init__(*args, **kwargs)
+        self.__model__ = orm_model
 
     @property
     def model(self):

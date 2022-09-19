@@ -2,9 +2,7 @@ from django.db import models
 from django.db.models import QuerySet
 from django.db.models.manager import BaseManager
 
-from pandas_orm.django.crud.save import bulk_save
-from pandas_orm.django.dataframe import is_dataframe
-from pandas_orm.django.mixins.dataframe_mixin import DjangoDataFrameMixin
+from pandas_orm.django.crud.save import bulk_create, bulk_update
 from pandas_orm.django.query import to_dataframe
 from pandas_orm.django.query import django_dataframe_values
 
@@ -41,7 +39,7 @@ class DataFrameManager(BaseManager.from_queryset(DjangoDFQuerySet)):
         :param kwargs: extended bulk_create kwargs
         :return:
         """
-        return bulk_save(
+        return bulk_create(
             objs,
             model=self.model,
             func=super(__class__, self).bulk_create,
@@ -56,7 +54,7 @@ class DataFrameManager(BaseManager.from_queryset(DjangoDFQuerySet)):
         :param kwargs: extended bulk_update kwargs
         :return:
         """
-        return bulk_save(
+        return bulk_update(
             objs,
             model=self.model or model,
             func=super(__class__, self).bulk_update,

@@ -5,12 +5,44 @@ Sqlalchemy Package Interfaces
 -----------------------------
 
 .. autofunction:: pandas_orm.sqlalchemy.query.query_to_dataframe
+.. code-block:: console
+
+    from sqlalchemy.orm import sessionmaker
+    from sqlalchemy import create_engine
+
+    from pandas_orm.sqlalchemy.query import query_to_dataframe
+
+    engine = create_engine(db_url)
+    Session = sessionmaker(bind=engine)
+    conn = engine.connect()
+    session = Session(bind=conn)
+
+    dataframe = query_to_dataframe(session.query(Collaborator))
+
+.. autofunction:: pandas_orm.sqlalchemy.query.to_dataframe
+.. code-block:: console
+
+    from sqlalchemy.orm import sessionmaker
+    from sqlalchemy import create_engine
+
+    from pandas_orm.sqlalchemy.query import to_dataframe
+
+    engine = create_engine(db_url)
+    Session = sessionmaker(bind=engine)
+    conn = engine.connect()
+    session = Session(bind=conn)
+
+    @to_dataframe
+    def get_all_objects():
+        return session.query(Collaborator)
+
+    df = get_all_objects()
+
 
 you can use the ``from pandas_orm.sqlalchemy.model_manager import ModelManager`` class:
 
 .. autoclass:: pandas_orm.sqlalchemy.model_manager::ModelManager
    :members:
-   :inherited-members:
 
 .. code-block:: console
 
@@ -40,5 +72,8 @@ you can use the ``from pandas_orm.sqlalchemy.model_manager import ModelManager``
         print(df.to_string())
 
 
-
+.. autoclass:: pandas_orm.sqlalchemy.session.sqlalchemy_db::DatabaseSession
+   :members:
+   :inherited-members:
+   :private-members:
 
