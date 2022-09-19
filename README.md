@@ -1,5 +1,24 @@
-# Example Package
+### Features
 
-This is a simple example package. You can use
-[Github-flavored Markdown](https://guides.github.com/features/mastering-markdown/)
-to write your content.
+- pandas.DataFrame
+- sqlalchemy orm C.R.U.D Bulk operations
+- Django orm C.R.U.D Bulk operations
+
+# pandas-orm
+
+![](https://raw.githubusercontent.com/ilyashusterman/pandas-orm/master/source_docs/_static/logo.png)
+
+![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=ilyashusterman&repo=pandas-orm)
+
+
+**Table of Contents**
+
+[TOCM]
+
+[TOC]
+
+#Documentation
+----
+
+[Documentation](https://ilyashusterman.github.io/pandas-orm/)
+
