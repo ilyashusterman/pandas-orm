@@ -1,10 +1,11 @@
 import time
-import logging
 from functools import wraps
 
-from pandas_orm.sqlalchemy.exceptions import PandasDBAlchemyUpdateColumnsNotSupported
+from pandas import DataFrame
 
-from pandas_orm.sqlalchemy.dataframe import DataFrame
+from pandas_orm.base.log import get_logger
+from pandas_orm.sqlalchemy.exceptions import AlchemyUpdateColumnsNotSupported
+
 from sqlalchemy.dialects.postgresql import insert
 
 
@@ -14,15 +15,14 @@ def execute_sql(func):
     :param func: function that returns statement, engine
     :return: DataFrame
     """
-    logger = logging.getLogger('PandasDBLogger')
-    logger.setLevel(logging.DEBUG)
+    logger = get_logger()
 
     @wraps(func)
     def wrapper(*args, **kwargs):
         statement, engine = func(*args, **kwargs)
         time_started = time.time()
-        records_size = kwargs['operate_df'].shape[0] if isinstance(
-            kwargs['operate_df'], DataFrame) else len(kwargs['operate_df'])
+        records_size = kwargs['dataframe'].shape[0] if isinstance(
+            kwargs['dataframe'], DataFrame) else len(kwargs['dataframe'])
         logger.debug('Method %s started ...' % func.__name__.title())
         result = engine.execute(
             statement
@@ -39,34 +39,34 @@ class DataFrameExecuteSql:
 
     @classmethod
     @execute_sql
-    def save_dataframe_to_sql_returning_id(cls, engine, operate_df, model,
+    def save_dataframe_to_sql_returning_id(cls, engine, dataframe, model,
                                            update_column, constraint):
-        statement = cls.base_save_dataframe_to_sql(operate_df, model,
+        statement = cls.base_save_dataframe_to_sql(dataframe, model,
                                                    update_column, constraint)
         statement = statement.returning(model.id)
         return statement, engine
 
     @classmethod
     @execute_sql
-    def save_dataframe_to_sql(cls, engine, operate_df, model, update_column,
+    def save_dataframe_to_sql(cls, engine, dataframe, model, update_column,
                               constraint):
-        statement = cls.base_save_dataframe_to_sql(operate_df, model,
+        statement = cls.base_save_dataframe_to_sql(dataframe, model,
                                                    update_column, constraint)
         return statement, engine
 
     @classmethod
     @execute_sql
-    def save_dataframe_to_sqlite(cls, engine, operate_df, model,
+    def save_dataframe_to_sqlite(cls, engine, dataframe, model,
                                  update_column, constraint):
         statement, record_columns = cls.get_insert_statement(model,
-                                                             operate_df)
+                                                             dataframe)
         return statement, engine
 
     @classmethod
-    def base_save_dataframe_to_sql(cls, operate_df, model, update_column,
+    def base_save_dataframe_to_sql(cls, dataframe, model, update_column,
                                    constraint):
         statement, record_columns = cls.get_insert_statement(model,
-                                                             operate_df)
+                                                             dataframe)
         set_update_attributes = cls.get_save_attributes(statement,
                                                         update_column, model,
                                                         record_columns)
@@ -83,10 +83,10 @@ class DataFrameExecuteSql:
 
     @classmethod
     @execute_sql
-    def insert_dataframe_to_sql(cls, engine, operate_df, model,
+    def insert_dataframe_to_sql(cls, engine, dataframe, model,
                                 update_column=None):
         statement, record_columns = cls.get_insert_statement(model,
-                                                             operate_df)
+                                                             dataframe)
         return statement, engine
 
     @classmethod
@@ -104,38 +104,38 @@ class DataFrameExecuteSql:
                                 if column in record_columns}
             return save_columns
         else:
-            raise PandasDBAlchemyUpdateColumnsNotSupported(model)
+            raise AlchemyUpdateColumnsNotSupported(model)
 
     @classmethod
     @execute_sql
-    def insert_dataframe_to_sql(cls, engine, operate_df, model,
+    def insert_dataframe_to_sql(cls, engine, dataframe, model,
                                 update_column=None):
         statement, record_columns = cls.get_insert_statement(model,
-                                                             operate_df)
+                                                             dataframe)
         return statement, engine
 
     @classmethod
     @execute_sql
-    def insert_dataframe_to_sql_returning_ids(cls, engine, operate_df, model):
+    def insert_dataframe_to_sql_returning_ids(cls, engine, dataframe, model):
         statement, record_columns = cls.get_insert_statement(model,
-                                                             operate_df)
+                                                             dataframe)
         statement = statement.returning(model.id)
         return statement, engine
 
     @classmethod
-    def get_insert_statement(cls, model, operate_df):
-        records_rows = cls.get_records(operate_df)
+    def get_insert_statement(cls, model, dataframe):
+        records_rows = cls.get_records(dataframe)
         statement = cls.prepare_bulk_statement(model, records_rows)
         return statement, records_rows[0].keys()
 
     @classmethod
-    def get_records(cls, operate_df):
-        if isinstance(operate_df, DataFrame) or hasattr(operate_df, 'to_dict'):
-            return operate_df.to_dict('records')
-        elif isinstance(operate_df, dict):
-            return [operate_df]
-        assert isinstance(operate_df, list)
-        return operate_df
+    def get_records(cls, dataframe):
+        if isinstance(dataframe, DataFrame) or hasattr(dataframe, 'to_dict'):
+            return dataframe.to_dict('records')
+        elif isinstance(dataframe, dict):
+            return [dataframe]
+        assert isinstance(dataframe, list)
+        return dataframe
 
     @classmethod
     def prepare_bulk_statement(cls, model, records_rows):

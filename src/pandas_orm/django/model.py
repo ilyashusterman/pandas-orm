@@ -2,16 +2,17 @@ from django.db import models
 from django.db.models import QuerySet
 from django.db.models.manager import BaseManager
 
+from pandas_orm.django.crud.save import bulk_save
 from pandas_orm.django.dataframe import is_dataframe
-from pandas_orm.django.mixins.dataframe_save import DataFrameSaveMixin
-from pandas_orm.django.django_dataframe import django_dataframe
-from pandas_orm.django.django_dataframe import django_dataframe_values
+from pandas_orm.django.mixins.dataframe_mixin import DjangoDataFrameMixin
+from pandas_orm.django.query import to_dataframe
+from pandas_orm.django.query import django_dataframe_values
 
 DJANGO_SUPPORTED_FIELDS = '_state'
 
 
 class DjangoDFQuerySet(QuerySet):
-    @django_dataframe
+    @to_dataframe
     def to_dataframe(self, *args, **kwargs):
         """
         :param args:
@@ -40,17 +41,14 @@ class DataFrameManager(BaseManager.from_queryset(DjangoDFQuerySet)):
         :param kwargs: extended bulk_create kwargs
         :return:
         """
-        df = objs
-        if not is_dataframe(df):
-            return super(__class__, self).bulk_create(*args, **kwargs)
-        if df.empty:
-            return df
-        records = DataFrameSaveMixin.get_objs(df, self.model)
-        saved = super(__class__, self).bulk_create(records, *args, **kwargs)
-        DataFrameSaveMixin.add_dataframe_ids(df, saved)
-        return df
+        return bulk_save(
+            objs,
+            model=self.model,
+            func=super(__class__, self).bulk_create,
+            args=args, kwargs=kwargs
+        )
 
-    def bulk_update(self, objs, *args, **kwargs):
+    def bulk_update(self, objs, *args, model=None, **kwargs):
         """
         bulk_update with DataFrame
         :param objs: List[django.db.models.Model] or DataFrame with similar model as dictionary
@@ -58,15 +56,12 @@ class DataFrameManager(BaseManager.from_queryset(DjangoDFQuerySet)):
         :param kwargs: extended bulk_update kwargs
         :return:
         """
-        df = objs
-        if not is_dataframe(df):
-            return super(__class__, self).bulk_update(objs, *args, **kwargs)
-        if df.empty:
-            return df
-        records = DataFrameSaveMixin.get_objs(df, self.model)
-        saved = super(__class__, self).bulk_update(records, *args, **kwargs)
-        DataFrameSaveMixin.add_dataframe_ids(df, saved)
-        return df
+        return bulk_save(
+            objs,
+            model=self.model or model,
+            func=super(__class__, self).bulk_update,
+            args=args, kwargs=kwargs
+        )
 
 
 class DjangoDFModel(models.Model):

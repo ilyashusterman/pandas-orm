@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+      <title>Django usage</title>
+    
+          <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="_static/theme-vendors.js"></script> -->
+      <script src="_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="genindex.html" />
+  <link rel="search" title="Search" href="search.html" />
+  <link rel="prev" title="sqlalchemy usage" href="sqlalchemy_usage.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="index.html" class="home-link">
+    
+      <img class="logo" src="_static/logo.png" alt="logo"/>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+  
+    <div class="nav-item">
+      <a href="index.html#welcome-to-pandas-orm-s-documentation"
+         class="nav-link ">
+         Contents:
+      </a>
+    </div>
+  
+    <div class="nav-item">
+      <a href="usage.html#"
+         class="nav-link  router-link-active">
+         None
+      </a>
+    </div>
+  
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+  
+    <div class="nav-item">
+      <a href="index.html#welcome-to-pandas-orm-s-documentation"
+         class="nav-link ">
+         Contents:
+      </a>
+    </div>
+  
+    <div class="nav-item">
+      <a href="usage.html#"
+         class="nav-link  router-link-active">
+         None
+      </a>
+    </div>
+  
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="index.html#welcome-to-pandas-orm-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+      </ul>
+    </div>
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="usage.html#">None</a></span>
+      </p>
+      <ul class="current">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="installation.html" class="reference internal ">Installation</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="sqlalchemy_usage.html" class="reference internal ">sqlalchemy usage</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 current">
+            
+              <a href="#" class="reference internal current">Django usage</a>
+            
+
+            
+              <ul>
+                
+                  <li class="toctree-l2"><a href="#django-package-interfaces" class="reference internal">Django Package Interfaces</a></li>
+                
+              </ul>
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="usage.html">&lt;no title&gt;</a> &raquo;</li>
+    
+    <li>Django usage</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="sqlalchemy_usage.html"
+       title="previous chapter">← sqlalchemy usage</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="django-usage">
+<h1>Django usage<a class="headerlink" href="#django-usage" title="Permalink to this heading">¶</a></h1>
+<section id="django-package-interfaces">
+<h2>Django Package Interfaces<a class="headerlink" href="#django-package-interfaces" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pandas_orm.django.query.query_to_dataframe">
+<span class="sig-prename descclassname"><span class="pre">pandas_orm.django.query.</span></span><span class="sig-name descname"><span class="pre">query_to_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QuerySet</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.query.query_to_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> – django.db.models.QuerySet</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>you can use the <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">pandas_orm.django.db</span> <span class="pre">import</span> <span class="pre">Model</span></code> class:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from django.db import models</span>
+<span class="go">from pandas_orm.django.db import Model</span>
+
+
+<span class="go">class Collaborator(Model):</span>
+<span class="go">    name = models.CharField(max_length=200)</span>
+<span class="go">    first_name = models.CharField(max_length=200, null=True)</span>
+<span class="go">    last_name = models.CharField(max_length=200, null=True)</span>
+<span class="go">    email = models.CharField(max_length=200)</span>
+<span class="go">    profile_link = models.CharField(max_length=250, null=True)</span>
+<span class="go">    image_url = models.CharField(max_length=250, null=True)</span>
+
+<span class="go">collaborators = test_models.Collaborator.objects.all()</span>
+<span class="go">df = collaborators.to_dataframe()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="sqlalchemy_usage.html"
+       title="previous chapter">← sqlalchemy usage</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, ilya shusterman.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

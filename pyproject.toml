@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pandas_orm"
-version = "0.0.5"
+version = "0.0.6"
 authors = [
   { name="Ilya Shusterman", email="shusterilyaman@gmail.com" },
 ]
@@ -21,6 +21,9 @@ dependencies = [
     "pandas >= 1.4.4",
     "SQLAlchemy >= 1.4.41",
     "Django >= 4.1.1"
+]
+keywords =[
+    "pandas", "orm", "django", "sqlalchemy", "dataframe"
 ]
 
 [project.urls]

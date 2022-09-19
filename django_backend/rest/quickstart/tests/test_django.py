@@ -1,12 +1,15 @@
+import logging
 import unittest
 
-from pandas_orm.django.django_dataframe import DataFrame
+from pandas_orm.django.query import DataFrame
 
 import rest.quickstart.models as models
 
 
 class TestDjangoModelManager(unittest.TestCase):
 
+    def setUp(self) -> None:
+        logging.basicConfig(level=logging.DEBUG)
     def test_user_query_dataframe(self):
         users = models.User.objects.all()
         df = users.to_dataframe()
@@ -48,6 +51,13 @@ class TestDjangoModelManager(unittest.TestCase):
         self.assertIsInstance(df, DataFrame)
         df['last_name'] = 'update_dataframe'
         df.bulk_update(fields=['last_name'])
+
+    def test_dataframe_to_objects(self):
+        collaborators = models.Collaborator.objects.all()
+        df = collaborators.to_dataframe()
+        objects = df.to_objects()
+        self.assertIsInstance(objects[0], models.Collaborator)
+        self.assertEqual(objects[0].pk, 1)
 
 
 if __name__ == '__main__':

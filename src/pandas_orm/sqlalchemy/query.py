@@ -1,11 +1,11 @@
 import time
-import logging
 from functools import wraps
 
 import sqlalchemy
 from pandas import read_sql, concat
 from sqlalchemy.orm import Query
 
+from pandas_orm.base.log import get_logger
 from pandas_orm.sqlalchemy.exceptions import ToDataFrameNotEmpty
 
 from pandas_orm.sqlalchemy.dataframe import DataFrame
@@ -38,7 +38,6 @@ def to_dataframe(func):
     """
     Annotation that wraps function that returns sqlalchemy.orm.query.Query
      reads it to a dataframe
-    :param query : sqlalchemy.orm.query.Query
     :param func: function that returns sqlalchemy.Session.query
     :return: DataFrame
     """
@@ -50,6 +49,7 @@ def to_dataframe(func):
         wrapped_df = DataFrame(df)
         if args and args[0].__class__.__name__ == 'ModelManager':
             wrapped_df.model_manager = args[0]
+            wrapped_df.__model__ = wrapped_df.model_manager.model
         return wrapped_df
 
     return wrapper
@@ -57,10 +57,12 @@ def to_dataframe(func):
 
 def query_to_dataframe(query: sqlalchemy.orm.query.Query):
     """
-    reads sqlalchemy.orm.query.Query to dataframe
+    Return a DataFrame read from sqlalchemy.orm.query.Query
     :param query: : sqlalchemy.orm.query.Query
-    :return: DataFrame
+    :return: dataframe represent of the result
+    :rtype: DataFrame
     """
+    logger = get_logger()
     if query is None:
         return DataFrame([])
     if is_dataframe(query):
@@ -69,9 +71,9 @@ def query_to_dataframe(query: sqlalchemy.orm.query.Query):
         return query
     assert isinstance(query, Query)
     time_started = time.time()
-    logging.debug('Querying started %s ...' % query.statement)
+    logger.debug('Querying started %s ...' % query.statement)
     result_dataframe = read_sql(query.statement,
                                 query.session.bind)
     querying_time = time.time() - time_started
-    logging.debug('Done Querying in %f seconds ' % querying_time)
+    logger.debug('Done Querying in %f seconds ' % querying_time)
     return result_dataframe

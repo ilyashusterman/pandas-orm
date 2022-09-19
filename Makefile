@@ -75,5 +75,8 @@ shutdown:
 build_pkg:
 	$(VERBOSE) python3 -m build
 	$(VERBOSE) python3 -m twine upload --repository pypi dist/*
+.PHONY: build_docs
+build_docs:
+	$(VERBOSE) export PYTHONPATH=$(pwd)/src && sphinx-build -b html source_docs/ docs/
 
 

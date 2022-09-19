@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+      <title>sqlalchemy usage</title>
+    
+          <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="_static/theme-vendors.js"></script> -->
+      <script src="_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="genindex.html" />
+  <link rel="search" title="Search" href="search.html" />
+  <link rel="next" title="Django usage" href="django_usage.html" />
+  <link rel="prev" title="Installation" href="usage.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="index.html" class="home-link">
+    
+      <img class="logo" src="_static/logo.png" alt="logo"/>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+  
+    <div class="nav-item">
+      <a href="index.html#welcome-to-pandas-orm-s-documentation"
+         class="nav-link ">
+         Contents:
+      </a>
+    </div>
+  
+    <div class="nav-item">
+      <a href="usage.html#installation"
+         class="nav-link  router-link-active">
+         installation
+      </a>
+    </div>
+  
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+  
+    <div class="nav-item">
+      <a href="index.html#welcome-to-pandas-orm-s-documentation"
+         class="nav-link ">
+         Contents:
+      </a>
+    </div>
+  
+    <div class="nav-item">
+      <a href="usage.html#installation"
+         class="nav-link  router-link-active">
+         installation
+      </a>
+    </div>
+  
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="index.html#welcome-to-pandas-orm-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+      </ul>
+    </div>
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="usage.html#installation">installation</a></span>
+      </p>
+      <ul class="current">
+        
+          <li class="toctree-l1 current">
+            
+              <a href="#" class="reference internal current">sqlalchemy usage</a>
+            
+
+            
+              <ul>
+                
+                  <li class="toctree-l2"><a href="#sqlalchemy-package-interfaces" class="reference internal">Sqlalchemy Package Interfaces</a></li>
+                
+              </ul>
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="django_usage.html" class="reference internal ">Django usage</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="usage.html">Installation</a> &raquo;</li>
+    
+    <li>sqlalchemy usage</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="usage.html"
+       title="previous chapter">← Installation</a>
+  </li>
+  <li class="next">
+    <a href="django_usage.html"
+       title="next chapter">Django usage →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="sqlalchemy-usage">
+<h1>sqlalchemy usage<a class="headerlink" href="#sqlalchemy-usage" title="Permalink to this heading">¶</a></h1>
+<section id="sqlalchemy-package-interfaces">
+<h2>Sqlalchemy Package Interfaces<a class="headerlink" href="#sqlalchemy-package-interfaces" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.query.query_to_dataframe">
+<span class="sig-prename descclassname"><span class="pre">pandas_orm.sqlalchemy.query.</span></span><span class="sig-name descname"><span class="pre">query_to_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.query.query_to_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a DataFrame read from sqlalchemy.orm.query.Query
+:param query: : sqlalchemy.orm.query.Query
+:return: dataframe represent of the result
+:rtype: DataFrame</p>
+</dd></dl>
+
+<p>you can use the <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">pandas_orm.sqlalchemy.model_manager</span> <span class="pre">import</span> <span class="pre">ModelManager</span></code> class:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.model_manager.ModelManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pandas_orm.sqlalchemy.model_manager.</span></span><span class="sig-name descname"><span class="pre">ModelManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.model_manager.ModelManager" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from pandas_orm.sqlalchemy.model_manager import ModelManager</span>
+
+<span class="go">class Collaborator(Base):</span>
+<span class="go">    __tablename__ = &#39;collaborator&#39;</span>
+
+<span class="go">    id = Column(&#39;id&#39;, BigInteger, primary_key=True)</span>
+<span class="go">    name = Column(&#39;name&#39;, String(200), nullable=False)</span>
+<span class="go">    first_name = Column(&#39;first_name&#39;, String(200), nullable=False)</span>
+<span class="go">    last_name = Column(&#39;last_name&#39;, String(200), nullable=False)</span>
+<span class="go">    email = Column(&#39;email&#39;, String(200), nullable=True)</span>
+<span class="go">    profile_link = Column(&#39;profile_link&#39;, String(250), nullable=True)</span>
+<span class="go">    image_url = Column(&#39;image_url&#39;, String(250), nullable=True)</span>
+
+<span class="go">    collaborator_unique_key = UniqueConstraint(&#39;email&#39;, &#39;name&#39;, name=&#39;collaborator_unique_key&#39;)</span>
+<span class="go">    collaborator_name_search_idx = Index(&#39;collaborator_name_search_idx&#39;, &#39;name&#39;, &#39;first_name&#39;, &#39;last_name&#39;)</span>
+
+
+<span class="go">def print_dataframe():</span>
+<span class="gp">    # </span>your database connection string
+<span class="go">    url = &#39;postgresql://docker:localone@localhost:5432/local_database&#39;</span>
+<span class="go">    model_manager = ModelManager(url=url, model=Collaborator)</span>
+<span class="go">    df = model_manager.all()</span>
+<span class="go">    assert isinstance(df, DataFrame)</span>
+<span class="go">    print(df.to_string())</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="usage.html"
+       title="previous chapter">← Installation</a>
+  </li>
+  <li class="next">
+    <a href="django_usage.html"
+       title="next chapter">Django usage →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, ilya shusterman.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

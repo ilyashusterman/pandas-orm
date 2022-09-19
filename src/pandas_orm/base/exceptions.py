@@ -1,8 +1,8 @@
-class PandasDBError(Exception):
+class PandasORMError(Exception):
     pass
 
 
-class DataFrameSaveError(PandasDBError):
+class DataFrameSaveError(PandasORMError):
 
     def __init__(self, error=None, msg=None):
         self.error = error
@@ -10,5 +10,5 @@ class DataFrameSaveError(PandasDBError):
         super(__class__, self).__init__(msg)
 
 
-class DataFrameModelNotSpecified(PandasDBError):
+class DataFrameModelNotSpecified(PandasORMError):
     pass

@@ -1,9 +1,18 @@
+from django.db.models import Model
 from pandas import DataFrame as PDDataFrame
 from pandas_orm.base.dataframe import BaseDataFrame
 from pandas_orm.base.exceptions import DataFrameModelNotSpecified
 
 
 class DataFrame(BaseDataFrame):
+    __model__: Model = None
+    """
+        declare
+        :param __model__: pandas_orm.django.Model
+    """
+
+    def to_objects(self):
+        return [self.model(**record) for record in self.to_dict('records')]
 
     def bulk_update(self, fields, batch_size=None, model=None):
         """
@@ -12,13 +21,12 @@ class DataFrame(BaseDataFrame):
         :param model: pandas_orm.django.Model
         :return:
         """
-        model = self.get_model(model=model)
-        if not model.objects.__class__.__name__ == 'DataFrameManager':
+        if not self.model.objects.__class__.__name__ == 'DataFrameManager':
             raise DataFrameModelNotSpecified()
         if self.empty:
             return self
 
-        return model.objects.bulk_update(self, fields, batch_size)
+        return self.model.objects.bulk_update(self, fields, batch_size, model=model)
 
     def bulk_create(self, *args, model=None, **kwargs):
         """
@@ -27,7 +35,7 @@ class DataFrame(BaseDataFrame):
         :param model: pandas_orm.django.Model
         :return:
         """
-        model = self.get_model(model=model)
+        model = model if model else self.model
         if not model.objects.__class__.__name__ == 'DataFrameManager':
             raise DataFrameModelNotSpecified()
         if self.empty:

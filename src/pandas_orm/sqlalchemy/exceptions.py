@@ -1,21 +1,29 @@
-from pandas_orm.base.exceptions import PandasDBError
+from pandas_orm.base.exceptions import PandasORMError
 
 
-class PandasDBAlchemyDataBaseError(PandasDBError):
+class AlchemyDataBaseError(PandasORMError):
     pass
 
 
-class PandasDBAlchemySaveModelStatementError(PandasDBAlchemyDataBaseError):
+class AlchemySaveModelStatementError(AlchemyDataBaseError):
     pass
 
 
-class PandasDBAlchemyModelManagerNotInitialized(PandasDBAlchemyDataBaseError):
+class AlchemyModelManagerNotInitialized(AlchemyDataBaseError):
     pass
 
 
-class PandasDBAlchemyUpdateColumnsNotSupported(PandasDBAlchemyDataBaseError):
+class AlchemyUpdateColumnsNotSupported(AlchemyDataBaseError):
     pass
 
 
-class ToDataFrameNotEmpty(PandasDBAlchemyDataBaseError):
+class ToDataFrameNotEmpty(AlchemyDataBaseError):
+    pass
+
+
+class EngineScopeMissing(AlchemyDataBaseError):
+    pass
+
+
+class ModelIsMissing(AlchemyDataBaseError):
     pass
