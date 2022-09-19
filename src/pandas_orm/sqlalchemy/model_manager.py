@@ -37,7 +37,7 @@ class ModelManager(DatabaseSession):
     def bulk_save(self, records, unique_fields=None, update_fields=None, returning_id=False, model=None) -> DataFrame:
         model = model if model else self.model
         new_records = ModelDataFrameManager.bulk_save(
-            records=records,
+            dataframe=records,
             model=model,
             unique_fields=unique_fields,
             update_fields=update_fields,

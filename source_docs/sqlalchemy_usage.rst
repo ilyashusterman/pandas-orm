@@ -77,3 +77,5 @@ you can use the ``from pandas_orm.sqlalchemy.model_manager import ModelManager``
    :inherited-members:
    :private-members:
 
+
+.. autofunction:: pandas_orm.sqlalchemy.crud.save.bulk_save

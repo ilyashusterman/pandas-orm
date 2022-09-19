@@ -50,7 +50,7 @@ class DataFrame(BaseDataFrame):
             if model is None:
                 raise ModelIsMissing()
             df = ModelDataFrameManager.bulk_save(
-                self,
+                dataframe=self,
                 engine_context_func=engine_context_func,
                 model=model,
                 unique_fields=unique_fields,

@@ -78,5 +78,6 @@ you can use the ``from pandas_orm.django.dataframe import DataFrame`` class:
     ###################
     updated = df_update.bulk_update()
 
+.. autofunction:: pandas_orm.django.crud.save.bulk_create
 
-
+.. autofunction:: pandas_orm.django.crud.save.bulk_update

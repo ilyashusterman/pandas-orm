@@ -9,10 +9,10 @@ from pandas_orm.sqlalchemy.crud.naive_save_arguments import NativeModelSaveArgum
 class ModelDataFrameManager:
 
     @classmethod
-    def bulk_save(cls, records, model, engine_context_func, unique_fields=None,
+    def bulk_save(cls, dataframe, model, engine_context_func, unique_fields=None,
                    update_fields=None, returning_id=False):
         """
-        :param records: DataFrame or collection
+        :param dataframe: DataFrame or collection
         :param model: sqlalchemy.orm.declarative_base
         :param engine_context_func: engine_scope context
         :param unique_fields: List[field..]
@@ -20,7 +20,7 @@ class ModelDataFrameManager:
         :param returning_id: bool
         :return: saved DataFrame
         """
-        records = cls._prepare_records(records)
+        records = cls._prepare_records(dataframe)
         if records.empty:
             return records
         logging.info(f'Saving {records.shape[0]} {model.__name__} records')
@@ -64,3 +64,22 @@ class ModelDataFrameManager:
         raise NotImplementedError(type(records))
 
 
+def bulk_save(dataframe, model, engine_context_func, unique_fields=None,
+              update_fields=None, returning_id=False):
+    """
+    :param dataframe: DataFrame or collection
+    :param model: sqlalchemy.orm.declarative_base
+    :param engine_context_func: engine_scope context
+    :param unique_fields: List[field..]
+    :param update_fields: List[field..]
+    :param returning_id: bool
+    :return: saved DataFrame
+    """
+    return ModelDataFrameManager.bulk_save(
+        dataframe=dataframe,
+        model=model,
+        engine_context_func=engine_context_func,
+        unique_fields=unique_fields,
+        update_fields=update_fields,
+        returning_id=returning_id,
+    )

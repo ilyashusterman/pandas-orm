@@ -298,6 +298,44 @@
 <span class="go">updated = df_update.bulk_update()</span>
 </pre></div>
 </div>
+<dl class="py function">
+<dt class="sig sig-object py" id="pandas_orm.django.crud.save.bulk_create">
+<span class="sig-prename descclassname"><span class="pre">pandas_orm.django.crud.save.</span></span><span class="sig-name descname"><span class="pre">bulk_create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.crud.save.bulk_create" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataframe</strong> – List[django.db.models.Model] or DataFrame with similar model as dictionary</p></li>
+<li><p><strong>model</strong> – django.db.models.Model</p></li>
+<li><p><strong>func</strong> – Model.objects.bulk_create or ModelManager func</p></li>
+<li><p><strong>args</strong> – Model.objects.bulk_create args</p></li>
+<li><p><strong>kwargs</strong> – Model.objects.bulk_create kwargs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>created DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pandas_orm.django.crud.save.bulk_update">
+<span class="sig-prename descclassname"><span class="pre">pandas_orm.django.crud.save.</span></span><span class="sig-name descname"><span class="pre">bulk_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.crud.save.bulk_update" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataframe</strong> – List[django.db.models.Model] or DataFrame with similar model as dictionary</p></li>
+<li><p><strong>model</strong> – django.db.models.Model</p></li>
+<li><p><strong>func</strong> – Model.objects.bulk_update or ModelManager func</p></li>
+<li><p><strong>args</strong> – func args</p></li>
+<li><p><strong>kwargs</strong> – func kwargs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>updated DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
