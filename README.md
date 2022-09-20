@@ -1,8 +1,10 @@
 ### Features
 
-- pandas.DataFrame
-- sqlalchemy orm C.R.U.D Bulk operations
-- Django orm C.R.U.D Bulk operations
+
+#### pandas.Dataframe can operate within each framework:
+- [sqlalchemy ORM](https://ilyashusterman.github.io/pandas-orm/sqlalchemy_usage.html), Query, C.R.U.D Bulk operations
+- [Django ORM](https://ilyashusterman.github.io/pandas-orm/django_usage.html), Queryset, C.R.U.D Bulk operations
+- View table description
 
 # pandas-orm
 
@@ -10,7 +12,13 @@
 
 ![](https://img.shields.io/github/stars/ilyashusterman/pandas-orm) ![](	https://img.shields.io/github/forks/ilyashusterman/pandas-orm) ![](	https://img.shields.io/github/license/ilyashusterman/pandas-orm)  ![](	https://img.shields.io/github/issues/ilyashusterman/pandas-orm)![](	https://img.shields.io/badge/build-success-brightgreen)
 
-#[Documentation](https://ilyashusterman.github.io/pandas-orm/)
+#### install
+
+`$ pip install pandas-orm`
+
+#### usage
+
+[Documentation](https://ilyashusterman.github.io/pandas-orm/)
 ----
 
 
