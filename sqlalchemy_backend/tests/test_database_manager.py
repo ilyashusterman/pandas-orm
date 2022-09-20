@@ -1,6 +1,7 @@
 import logging
 import unittest
 
+from pandas_orm.base.describe import DescribeDataFrameTable
 from pandas_orm.sqlalchemy.dataframe import DataFrame
 from pandas_orm.sqlalchemy.model_manager import ModelManager
 from sqlalchemy_backend.config import DB_URL
@@ -73,6 +74,7 @@ class TestDataBase(unittest.TestCase):
             last_name="test_dataframe_bulk_save"
         )], orm_model=Collaborator)
         describe = df_new.describe_table()
+        self.assertIsInstance(describe, DescribeDataFrameTable)
 
 
 

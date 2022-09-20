@@ -1,6 +1,7 @@
 import logging
 import unittest
 
+from pandas_orm.base.describe import DescribeDataFrameTable
 from pandas_orm.django.query import DataFrame
 
 import rest.quickstart.models as models
@@ -98,7 +99,7 @@ class TestDjangoModelManager(unittest.TestCase):
         objs = models.Collaborator.objects.all()
         df = objs.to_dataframe()
         describe = df.describe_table()
-        print(describe)
+        self.assertIsInstance(describe, DescribeDataFrameTable)
 
 
 if __name__ == '__main__':

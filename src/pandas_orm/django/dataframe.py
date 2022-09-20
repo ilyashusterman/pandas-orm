@@ -57,7 +57,7 @@ class DataFrame(BaseDataFrame):
             raise DataFrameModelNotSpecified()
         return model
 
-    def describe_table(self):
+    def describe_table(self) -> DescribeDataFrameTable:
         model = ModelDescribe(self.model)
         columns = model.describe_columns()
         df_columns = DataFrame(columns)
