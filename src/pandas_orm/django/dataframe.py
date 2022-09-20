@@ -1,7 +1,9 @@
 from django.db.models import Model
 from pandas import DataFrame as PDDataFrame
 from pandas_orm.base.dataframe import BaseDataFrame
+from pandas_orm.base.describe import DescribeDataFrameTable
 from pandas_orm.base.exceptions import DataFrameModelNotSpecified
+from pandas_orm.django.describe.model_describe import ModelDescribe
 
 
 class DataFrame(BaseDataFrame):
@@ -54,6 +56,18 @@ class DataFrame(BaseDataFrame):
         if not model.objects.__class__.__name__ == 'DataFrameManager':
             raise DataFrameModelNotSpecified()
         return model
+
+    def describe_table(self):
+        model = ModelDescribe(self.model)
+        columns = model.describe_columns()
+        df_columns = DataFrame(columns)
+        indexes = model.describe_indexes()
+        df_indexes = DataFrame(indexes)
+        return DescribeDataFrameTable(
+            name=model.name,
+            columns=df_columns,
+            indexes=df_indexes
+        )
 
 
 def is_dataframe(records):

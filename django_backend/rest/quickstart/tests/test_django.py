@@ -94,6 +94,12 @@ class TestDjangoModelManager(unittest.TestCase):
         df = objs.to_dataframe()
         self.assertEqual(df.iloc[0]['last_name'], last_name)
 
+    def test_describe_table(self):
+        objs = models.Collaborator.objects.all()
+        df = objs.to_dataframe()
+        describe = df.describe_table()
+        print(describe)
+
 
 if __name__ == '__main__':
     unittest.main()

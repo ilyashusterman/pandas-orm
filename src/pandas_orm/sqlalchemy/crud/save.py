@@ -2,6 +2,7 @@ import logging
 
 from pandas import DataFrame
 
+from pandas_orm.base.dataframe import is_base_dataframe
 from pandas_orm.sqlalchemy.execute_sql import DataFrameExecuteSql
 from pandas_orm.sqlalchemy.crud.naive_save_arguments import NativeModelSaveArguments
 
@@ -43,16 +44,20 @@ class ModelDataFrameManager:
 
     @classmethod
     def _add_records_ids(cls, results, records):
-        new_records = records
         new_ids = results.fetchall()
-        if issubclass(records.__class__, DataFrame):
-            df_ids = DataFrame(new_ids, columns=['id'])
-            records['id'] = df_ids['id']
-            new_records = records.to_dict('records')
+        df_ids = DataFrame(new_ids, columns=['id'])
+        if is_base_dataframe(records):
+            records = cls.update_records_ids(df_ids, records)
         if isinstance(records, list):
-            [record.update({'id': new_id[0]}) for record, new_id in
-             zip(new_records, new_ids)]
-        return new_records
+            records = DataFrame(records)
+            records = cls.update_records_ids(df_ids, records)
+        return records
+
+    @classmethod
+    def update_records_ids(cls, df_ids, records):
+        records['id'] = df_ids['id']
+        records = records.to_dict('records')
+        return records
 
     @classmethod
     def _prepare_records(cls, records) -> DataFrame:

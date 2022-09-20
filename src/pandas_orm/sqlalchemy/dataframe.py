@@ -1,18 +1,11 @@
-from pandas import DataFrame as PDDataFrame
 from sqlalchemy.orm import declarative_base
 
-from pandas_orm.base.dataframe import BaseDataFrame
-from pandas_orm.sqlalchemy.crud.save import ModelDataFrameManager
+from pandas_orm.base.dataframe import BaseDataFrame, is_base_dataframe
+from pandas_orm.base.describe import DescribeDataFrameTable
+from pandas_orm.sqlalchemy.crud.save import bulk_save
 from pandas_orm.sqlalchemy.exceptions import ModelIsMissing, \
     EngineScopeMissing
-
-
-def is_dataframe(records):
-    """
-    :param records:
-    :return: is the records of instance dataframe
-    """
-    return isinstance(records, DataFrame) or isinstance(records, PDDataFrame)
+from pandas_orm.sqlalchemy.describe.model_describe import ModelDescribe
 
 
 class DataFrame(BaseDataFrame):
@@ -49,7 +42,7 @@ class DataFrame(BaseDataFrame):
                 raise EngineScopeMissing()
             if model is None:
                 raise ModelIsMissing()
-            df = ModelDataFrameManager.bulk_save(
+            df = bulk_save(
                 dataframe=self,
                 engine_context_func=engine_context_func,
                 model=model,
@@ -68,6 +61,20 @@ class DataFrame(BaseDataFrame):
     def to_objects(self, model=None):
         model = model if model else self.model
         return [model(**record) for record in self.to_dict('records')]
+
+    def describe_table(self):
+        model = ModelDescribe(self.model)
+        columns = model.describe_columns()
+        df_cols = DataFrame(columns, orm_model=self.model)
+        indexes = model.describe_indexes()
+        df_indexes = DataFrame(indexes, orm_model=self.model)
+        return DescribeDataFrameTable(
+            name=model.name,
+            columns=df_cols,
+            indexes=df_indexes
+        )
+
+
 
 
 def initialized_dataframe(records, model_manager=None) -> DataFrame:
@@ -97,3 +104,11 @@ def initialized_dataframe_model(records, model) -> DataFrame:
         raise NotImplementedError(type(records))
     df = DataFrame(records, orm_model=model)
     return df
+
+
+def is_dataframe(records):
+    """
+    :param records:
+    :return: is the records of instance dataframe
+    """
+    return isinstance(records, DataFrame) or is_base_dataframe(records)

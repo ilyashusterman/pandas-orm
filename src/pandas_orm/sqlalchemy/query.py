@@ -3,14 +3,11 @@ from functools import wraps
 
 import sqlalchemy
 from pandas import read_sql, concat
-from pandas import DataFrame as PDDataFrame
 from sqlalchemy.orm import Query
 
 from pandas_orm.base.log import get_logger
-from pandas_orm.sqlalchemy.exceptions import ToDataFrameNotEmpty
 
 from pandas_orm.sqlalchemy.dataframe import DataFrame
-from pandas_orm.sqlalchemy.dataframe import is_dataframe
 
 
 def to_dataframe_gen(func):
@@ -35,7 +32,7 @@ def to_dataframe_gen(func):
     return wrapper
 
 
-def initialize_queryset_dataframe(df: PDDataFrame, query: Query):
+def initialize_queryset_dataframe(df: DataFrame, query: Query):
     if len(query.column_descriptions) == 1:
         column_description = query.column_descriptions[0]
         if column_description['aliased'] is False:
@@ -55,11 +52,11 @@ def to_dataframe(func):
     def wrapper(*args, **kwargs):
         query = func(*args, **kwargs)
         df = query_to_dataframe(query)
-        wrapped_df = initialize_queryset_dataframe(df, query)
         if args and args[0].__class__.__name__ == 'ModelManager':
-            wrapped_df.model_manager = args[0]
-            wrapped_df.__model__ = wrapped_df.model_manager.model
-        return wrapped_df
+            model_manager = args[0]
+            df.model_manager = model_manager
+            df.__model__ = model_manager.model
+        return df
 
     return wrapper
 
@@ -74,15 +71,12 @@ def query_to_dataframe(query: sqlalchemy.orm.query.Query):
     logger = get_logger()
     if query is None:
         return DataFrame([])
-    if is_dataframe(query):
-        if not query.empty:
-            raise ToDataFrameNotEmpty(query)
-        return query
     assert isinstance(query, Query)
     time_started = time.time()
     logger.debug('Querying started %s ...' % query.statement)
     result_dataframe = read_sql(query.statement,
                                 query.session.bind)
+    df = initialize_queryset_dataframe(result_dataframe, query=query)
     querying_time = time.time() - time_started
     logger.debug('Done Querying in %f seconds ' % querying_time)
-    return result_dataframe
+    return df

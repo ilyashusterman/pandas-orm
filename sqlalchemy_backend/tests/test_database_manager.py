@@ -58,14 +58,23 @@ class TestDataBase(unittest.TestCase):
             name="test",
             email="test@test.test",
             last_name="test_dataframe_bulk_save"
-        )])
+        )], orm_model=Collaborator)
         saved_df = df_new.bulk_save(
-            model=Collaborator,
             engine_context_func=self.db.engine,
             returning_id=True
         )
         objects = saved_df.to_objects()
         self.assertEqual(objects[0].id, 1)
+
+    def test_describe_table(self):
+        df_new = DataFrame([dict(
+            name="test",
+            email="test@test.test",
+            last_name="test_dataframe_bulk_save"
+        )], orm_model=Collaborator)
+        describe = df_new.describe_table()
+
+
 
 
 if __name__ == '__main__':

@@ -15,7 +15,7 @@ def get_result_query_columns(result_query: QuerySet):
     return [field.name for field in result_query.model._meta.fields]
 
 
-def query_to_dataframe(query: QuerySet):
+def query_to_dataframe(query: QuerySet)-> DataFrame:
     """
     :param query: django.db.models.QuerySet
     :return: DataFrame
@@ -23,17 +23,29 @@ def query_to_dataframe(query: QuerySet):
     logger = get_logger()
     columns = get_result_query_columns(query)
     if not query:
-        df = DataFrame([], columns=columns)
-        df.__model__ = query.model
+        df = init_dataframe([], columns=columns, query=query)
         return df
     time_started = time.time()
     logger.debug('Querying started %s ...' % query.query)
     list_values = query.values_list(*columns)
-    result_dataframe = DataFrame(list(list_values), columns=columns)
-    result_dataframe.__model__ = query.model
+    result_dataframe = init_dataframe(list(list_values), columns, query)
     querying_time = time.time() - time_started
     logger.debug('Done Querying in %f seconds ' % querying_time)
     return result_dataframe
+
+
+def init_dataframe(data, columns, query) -> DataFrame:
+    """
+    :param data: Dataframe data
+    :param columns: List[column...]
+    :param query: django.db.models.QuerySet
+    :return:
+    """
+    return DataFrame(
+        data,
+        columns=columns,
+        orm_model=query.model
+    )
 
 
 def to_dataframe(func):

@@ -2,7 +2,7 @@ Django usage
 ============
 
 Django Package Interfaces
------------------------------
+-------------------------
 
 .. autofunction:: pandas_orm.django.query.query_to_dataframe
 .. code-block:: console
@@ -22,6 +22,9 @@ Django Package Interfaces
     from pandas_orm.django.query import to_dataframe
     df = query_to_dataframe(Collaborator.objects.all())
 
+
+Django Package Models
+---------------------
 
 you can use the ``from pandas_orm.django.db import Model`` class:
 
@@ -48,6 +51,9 @@ you can use the ``from pandas_orm.django.db import Model`` class:
     test_models.Collaborator.bulk_update(df, fields=['last_name'])
     # or naive way
     test_models.Collaborator.bulk_update(df)
+
+Django Package DataFrame & QuerySet
+------------------------------------
 
 you can use the ``from pandas_orm.django.dataframe import DataFrame`` class:
 
@@ -77,6 +83,9 @@ you can use the ``from pandas_orm.django.dataframe import DataFrame`` class:
     ### bulk_update ###
     ###################
     updated = df_update.bulk_update()
+
+Django Package bulk operations
+------------------------------
 
 .. autofunction:: pandas_orm.django.crud.save.bulk_create
 

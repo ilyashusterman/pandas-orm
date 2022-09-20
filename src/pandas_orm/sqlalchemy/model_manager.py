@@ -1,13 +1,23 @@
-from pandas_orm.sqlalchemy.crud.save import ModelDataFrameManager
+from sqlalchemy.orm import declarative_base
+
+from pandas_orm.sqlalchemy.crud.save import bulk_save
 from pandas_orm.sqlalchemy.query import to_dataframe
 from pandas_orm.sqlalchemy.dataframe import DataFrame, initialized_dataframe
 from pandas_orm.sqlalchemy.session.sqlalchemy_db import DatabaseSession
 
 
 class ModelManager(DatabaseSession):
-
-    def __init__(self, model, *args, **kwargs):
-        super(__class__, self).__init__(*args, **kwargs)
+    """
+    Manage engine and session scopes to the database contexts
+    """
+    def __init__(self, url: str= None, model: declarative_base= None, *args, **kwargs):
+        """
+        :param url: str database connection string
+        :param model: declarative_base Sqlalchemy Model
+        :param args:
+        :param kwargs:
+        """
+        super(__class__, self).__init__(url=url, *args, **kwargs)
         self.model = model
 
     @to_dataframe
@@ -36,7 +46,7 @@ class ModelManager(DatabaseSession):
 
     def bulk_save(self, records, unique_fields=None, update_fields=None, returning_id=False, model=None) -> DataFrame:
         model = model if model else self.model
-        new_records = ModelDataFrameManager.bulk_save(
+        new_records = bulk_save(
             dataframe=records,
             model=model,
             unique_fields=unique_fields,

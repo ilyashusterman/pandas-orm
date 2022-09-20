@@ -1,9 +1,11 @@
 from django.db.models import Model
 
+from pandas_orm.django.describe.model_describe import ModelDescribe
+
 
 class NaiveModelBulkArguments:
     def __init__(self, model: Model, dataframe):
-        self.model = model
+        self.model = ModelDescribe(model)
         self.records = dataframe
 
     def get_update_fields(self, fields=None):
@@ -13,7 +15,7 @@ class NaiveModelBulkArguments:
         update_fields=['last_name'], unique_fields=['name', 'email']
         """
         columns = []
-        for column in self.model._meta.fields:
+        for column in self.model.get_columns():
             if column.primary_key:
                 continue
             if column.unique:
@@ -47,8 +49,9 @@ class NativeBulkCreateArguments(NaiveModelBulkArguments):
     def get_unique_fields(self, fields):
         if fields:
             return fields
-        if self.model._meta.constraints:
-            return self.model._meta.constraints[0].fields
+        constraints = self.model.get_constraints()
+        if constraints:
+            return constraints[0].fields
 
         return []
 

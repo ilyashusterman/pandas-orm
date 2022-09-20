@@ -1,8 +1,8 @@
 sqlalchemy usage
 ================
 
-Sqlalchemy Package Interfaces
------------------------------
+Sqlalchemy ORM Package Interfaces
+---------------------------------
 
 .. autofunction:: pandas_orm.sqlalchemy.query.query_to_dataframe
 .. code-block:: console
@@ -38,6 +38,29 @@ Sqlalchemy Package Interfaces
 
     df = get_all_objects()
 
+Sqlalchemy ORM DataFrame
+------------------------
+.. autoclass:: pandas_orm.sqlalchemy.dataframe::DataFrame
+   :members:
+
+.. code-block:: console
+
+    from pandas_orm.sqlalchemy.dataframe import DataFrame
+
+    df_new = DataFrame([dict(
+        name="test",
+        email="test@test.test",
+        last_name="test_dataframe_bulk_save"
+    )], orm_model=Collaborator)
+    saved_df = df_new.bulk_save(
+        engine_context_func=engine_context,
+        returning_id=True
+    )
+    saved_df.bulk_save() # or naive way id didn't specified unique_fields or update_fields
+
+
+Sqlalchemy ORM Database Context
+-------------------------------
 
 you can use the ``from pandas_orm.sqlalchemy.model_manager import ModelManager`` class:
 
@@ -72,10 +95,22 @@ you can use the ``from pandas_orm.sqlalchemy.model_manager import ModelManager``
         print(df.to_string())
 
 
+.. autofunction:: pandas_orm.sqlalchemy.crud.save.bulk_save
+
+
+Sqlalchemy Database Context
+---------------------------
 .. autoclass:: pandas_orm.sqlalchemy.session.sqlalchemy_db::DatabaseSession
    :members:
    :inherited-members:
    :private-members:
 
+.. code-block:: console
 
-.. autofunction:: pandas_orm.sqlalchemy.crud.save.bulk_save
+    from pandas_orm.sqlalchemy.session.sqlalchemy_db import DatabaseSession
+
+    In [0]: db = DatabaseSession(url)
+    In [1]: with db.session() as session:
+       ...:     result = session.execute('select * from collaborator where id=1')
+    In [2]: result.fetchall()
+    Out[2]: [(1, u'name name', u'test test',...]
