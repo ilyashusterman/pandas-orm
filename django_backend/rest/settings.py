@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
-from pandas_orm.django.setup import get_django_db
+from pandas_orm.django.setup import django_database, get_django_databases
 
 DB_HOST = os.environ.get('DB_HOST', 'localhost')
 DB_URL = os.environ.get('DATABASE_URL', f'postgresql://docker:localone@{DB_HOST}:5432/local_database')
@@ -78,14 +78,7 @@ WSGI_APPLICATION = 'rest.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # },
-    'default': get_django_db(DB_URL)
-}
-
+DATABASES = get_django_databases({'url': DB_URL, 'engine':'django.db.backends.postgresql'})
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
