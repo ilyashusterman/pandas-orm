@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Collection, Dict
 
 from sqlalchemy.engine.url import make_url
 
 
-def django_database(url: str, engine:str='django.db.backends.postgresql'):
+def django_database(url: str, engine: str = 'django.db.backends.postgresql'):
     """
     :param url: Database string representation
     :param engine: database engine for django framework
@@ -23,23 +24,40 @@ def django_database(url: str, engine:str='django.db.backends.postgresql'):
     return database_setup
 
 
+DJANGO_DATABASE_DEFAULT_KEY = 'default'
+
+
 @dataclass
 class DjangoDataBaseConf:
     engine: str
     url: str
-    key: str = 'default'
+    key: str = DJANGO_DATABASE_DEFAULT_KEY
 
 
-def get_django_databases(*configs):
-    config_objs = configs
-    if not config_objs:
-        raise Exception('Empty domain urls')
-    if isinstance(config_objs[0], dict):
-        config_objs = [DjangoDataBaseConf(**conf) for conf in config_objs]
+def get_django_databases(configs: Dict | Collection[Dict]=None, BASE_DIR=None):
     """
-    :param urls: 
+    Initialize django database keys for settings.py
+    :param configs:
+    :param BASE_DIR: django base directory
     :return: django DATABASES Dict
     """
+    if not configs:
+        if not BASE_DIR:
+            raise Exception('did not specified BASE_DIR for default sqlite3')
+        return {
+            DJANGO_DATABASE_DEFAULT_KEY:
+                {
+                    'ENGINE': 'django.db.backends.sqlite3',
+                    'NAME': BASE_DIR / 'db.sqlite3',
+                }
+        }
+    if isinstance(configs, dict):
+        configs = [configs]
+
+    if not isinstance(configs[0], dict):
+        raise Exception(f'Database config expected to be dictionary, got {type(configs[0])}')
+
+    config_objs = [DjangoDataBaseConf(**conf) for conf in configs]
     return {
         django_db.key: django_database(django_db.url, django_db.engine)
         for django_db in config_objs

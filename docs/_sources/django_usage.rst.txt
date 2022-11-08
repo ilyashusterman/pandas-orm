@@ -3,6 +3,18 @@ Django usage
 
 Django Package Interfaces
 -------------------------
+.. autofunction:: pandas_orm.django.setup.get_django_databases
+.. code-block:: console
+
+    # At settings.py
+    from pandas_orm.django.setup import get_django_databases
+
+    DATABASES = get_django_databases({
+        'url': 'postgresql://username:password@localhost:5432/name',
+        'engine':'django.db.backends.postgresql'
+    })
+    # Default alternative
+    DATABASES = get_django_databases(BASE_DIR=BASE_DIR)
 
 .. autofunction:: pandas_orm.django.query.query_to_dataframe
 .. code-block:: console

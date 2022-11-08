@@ -187,19 +187,17 @@
 <h1>Django usage<a class="headerlink" href="#django-usage" title="Permalink to this heading">¶</a></h1>
 <section id="django-package-interfaces">
 <h2>Django Package Interfaces<a class="headerlink" href="#django-package-interfaces" title="Permalink to this heading">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="pandas_orm.django.query.query_to_dataframe">
-<span class="sig-prename descclassname"><span class="pre">pandas_orm.django.query.</span></span><span class="sig-name descname"><span class="pre">query_to_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QuerySet</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pandas_orm.django.dataframe.DataFrame" title="pandas_orm.django.dataframe.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#pandas_orm.django.query.query_to_dataframe" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>query</strong> – django.db.models.QuerySet</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>At settings.py
+<span class="go">from pandas_orm.django.setup import get_django_databases</span>
 
+<span class="go">DATABASES = get_django_databases({</span>
+<span class="go">    &#39;url&#39;: &#39;postgresql://username:password@localhost:5432/name&#39;,</span>
+<span class="go">    &#39;engine&#39;:&#39;django.db.backends.postgresql&#39;</span>
+<span class="go">})</span>
+<span class="gp"># </span>Default alternative
+<span class="go">DATABASES = get_django_databases(BASE_DIR=BASE_DIR)</span>
+</pre></div>
+</div>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from pandas_orm.django.query import query_to_dataframe</span>
 
 <span class="go">@to_dataframe</span>
@@ -209,14 +207,6 @@
 <span class="go">df = get_queryset()</span>
 </pre></div>
 </div>
-<dl class="py function">
-<dt class="sig sig-object py" id="pandas_orm.django.query.to_dataframe">
-<span class="sig-prename descclassname"><span class="pre">pandas_orm.django.query.</span></span><span class="sig-name descname"><span class="pre">to_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.query.to_dataframe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Annotation that wraps django.db.models.QuerySet reads to a DataFrame
-:param func: function that returns django.db.models.QuerySet
-:return: DataFrame</p>
-</dd></dl>
-
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from pandas_orm.django.query import to_dataframe</span>
 <span class="go">df = query_to_dataframe(Collaborator.objects.all())</span>
 </pre></div>
@@ -249,65 +239,6 @@
 <section id="django-package-dataframe-queryset">
 <h2>Django Package DataFrame &amp; QuerySet<a class="headerlink" href="#django-package-dataframe-queryset" title="Permalink to this heading">¶</a></h2>
 <p>you can use the <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">pandas_orm.django.dataframe</span> <span class="pre">import</span> <span class="pre">DataFrame</span></code> class:</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="pandas_orm.django.dataframe.DataFrame">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pandas_orm.django.dataframe.</span></span><span class="sig-name descname"><span class="pre">DataFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orm_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.dataframe.DataFrame" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="pandas_orm.django.dataframe.DataFrame.bulk_create">
-<span class="sig-name descname"><span class="pre">bulk_create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.dataframe.DataFrame.bulk_create" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>args</strong> – extended bulk_create args</p></li>
-<li><p><strong>kwargs</strong> – extended bulk_create kwargs</p></li>
-<li><p><strong>model</strong> – pandas_orm.django.Model</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pandas_orm.django.dataframe.DataFrame.bulk_update">
-<span class="sig-name descname"><span class="pre">bulk_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.dataframe.DataFrame.bulk_update" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fields</strong> – List[str] fields to update for each records in the table</p></li>
-<li><p><strong>batch_size</strong> – integer</p></li>
-<li><p><strong>model</strong> – pandas_orm.django.Model</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pandas_orm.django.dataframe.DataFrame.describe_table">
-<span class="sig-name descname"><span class="pre">describe_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.dataframe.DataFrame.describe_table" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>description dataframes for table fields and index, constraints..</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pandas_orm.django.dataframe.DataFrame.to_objects">
-<span class="sig-name descname"><span class="pre">to_objects</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.dataframe.DataFrame.to_objects" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>model objects list</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from pandas_orm.django.dataframe import DataFrame</span>
 
 <span class="go">last_name = &quot;collaborator_bulk_create_with_specified_model_naive&quot;</span>
@@ -333,44 +264,6 @@
 </section>
 <section id="django-package-bulk-operations">
 <h2>Django Package bulk operations<a class="headerlink" href="#django-package-bulk-operations" title="Permalink to this heading">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="pandas_orm.django.crud.save.bulk_create">
-<span class="sig-prename descclassname"><span class="pre">pandas_orm.django.crud.save.</span></span><span class="sig-name descname"><span class="pre">bulk_create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.crud.save.bulk_create" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dataframe</strong> – List[django.db.models.Model] or DataFrame with similar model as dictionary</p></li>
-<li><p><strong>model</strong> – django.db.models.Model</p></li>
-<li><p><strong>func</strong> – Model.objects.bulk_create or ModelManager func</p></li>
-<li><p><strong>args</strong> – Model.objects.bulk_create args</p></li>
-<li><p><strong>kwargs</strong> – Model.objects.bulk_create kwargs</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>created DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pandas_orm.django.crud.save.bulk_update">
-<span class="sig-prename descclassname"><span class="pre">pandas_orm.django.crud.save.</span></span><span class="sig-name descname"><span class="pre">bulk_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.django.crud.save.bulk_update" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dataframe</strong> – List[django.db.models.Model] or DataFrame with similar model as dictionary</p></li>
-<li><p><strong>model</strong> – django.db.models.Model</p></li>
-<li><p><strong>func</strong> – Model.objects.bulk_update or ModelManager func</p></li>
-<li><p><strong>args</strong> – func args</p></li>
-<li><p><strong>kwargs</strong> – func kwargs</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>updated DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
 </section>
 </section>
 

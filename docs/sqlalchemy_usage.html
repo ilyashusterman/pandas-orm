@@ -192,15 +192,6 @@
 <h1>sqlalchemy usage<a class="headerlink" href="#sqlalchemy-usage" title="Permalink to this heading">¶</a></h1>
 <section id="sqlalchemy-orm-package-interfaces">
 <h2>Sqlalchemy ORM Package Interfaces<a class="headerlink" href="#sqlalchemy-orm-package-interfaces" title="Permalink to this heading">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.query.query_to_dataframe">
-<span class="sig-prename descclassname"><span class="pre">pandas_orm.sqlalchemy.query.</span></span><span class="sig-name descname"><span class="pre">query_to_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.query.query_to_dataframe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a DataFrame read from sqlalchemy.orm.query.Query
-:param query: : sqlalchemy.orm.query.Query
-:return: dataframe represent of the result
-:rtype: DataFrame</p>
-</dd></dl>
-
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from sqlalchemy.orm import sessionmaker</span>
 <span class="go">from sqlalchemy import create_engine</span>
 
@@ -214,23 +205,6 @@
 <span class="go">dataframe = query_to_dataframe(session.query(Collaborator))</span>
 </pre></div>
 </div>
-<dl class="py function">
-<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.query.to_dataframe">
-<span class="sig-prename descclassname"><span class="pre">pandas_orm.sqlalchemy.query.</span></span><span class="sig-name descname"><span class="pre">to_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.query.to_dataframe" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>Annotation that wraps function that returns sqlalchemy.orm.query.Query</dt><dd><p>reads it to a dataframe</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>func</strong> – function that returns sqlalchemy.Session.query</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from sqlalchemy.orm import sessionmaker</span>
 <span class="go">from sqlalchemy import create_engine</span>
 
@@ -251,48 +225,6 @@
 </section>
 <section id="sqlalchemy-orm-dataframe">
 <h2>Sqlalchemy ORM DataFrame<a class="headerlink" href="#sqlalchemy-orm-dataframe" title="Permalink to this heading">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.dataframe.DataFrame">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pandas_orm.sqlalchemy.dataframe.</span></span><span class="sig-name descname"><span class="pre">DataFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orm_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_manager</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.dataframe.DataFrame" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.dataframe.DataFrame.bulk_save">
-<span class="sig-name descname"><span class="pre">bulk_save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unique_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">returning_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine_context_func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.dataframe.DataFrame.bulk_save" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>unique_fields</strong> – unique List[field] of the table</p></li>
-<li><p><strong>update_fields</strong> – update fields List[field] of the table</p></li>
-<li><p><strong>returning_id</strong> – is returning id</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>pandas_orm.sqlalchemy.dataframe.DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.dataframe.DataFrame.describe_table">
-<span class="sig-name descname"><span class="pre">describe_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.dataframe.DataFrame.describe_table" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>description dataframes for table fields and index, constraints..</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.dataframe.DataFrame.to_objects">
-<span class="sig-name descname"><span class="pre">to_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.dataframe.DataFrame.to_objects" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>model objects list</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from pandas_orm.sqlalchemy.dataframe import DataFrame</span>
 
 <span class="go">df_new = DataFrame([dict(</span>
@@ -311,12 +243,6 @@
 <section id="sqlalchemy-orm-database-context">
 <h2>Sqlalchemy ORM Database Context<a class="headerlink" href="#sqlalchemy-orm-database-context" title="Permalink to this heading">¶</a></h2>
 <p>you can use the <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">pandas_orm.sqlalchemy.model_manager</span> <span class="pre">import</span> <span class="pre">ModelManager</span></code> class:</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.model_manager.ModelManager">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pandas_orm.sqlalchemy.model_manager.</span></span><span class="sig-name descname"><span class="pre">ModelManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">declarative_base</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.model_manager.ModelManager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manage engine and session scopes to the database contexts</p>
-</dd></dl>
-
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from pandas_orm.sqlalchemy.model_manager import ModelManager</span>
 
 <span class="go">class Collaborator(Base):</span>
@@ -343,69 +269,9 @@
 <span class="go">    print(df.to_string())</span>
 </pre></div>
 </div>
-<dl class="py function">
-<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.crud.save.bulk_save">
-<span class="sig-prename descclassname"><span class="pre">pandas_orm.sqlalchemy.crud.save.</span></span><span class="sig-name descname"><span class="pre">bulk_save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine_context_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">returning_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.crud.save.bulk_save" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dataframe</strong> – DataFrame or collection</p></li>
-<li><p><strong>model</strong> – sqlalchemy.orm.declarative_base</p></li>
-<li><p><strong>engine_context_func</strong> – engine_scope context</p></li>
-<li><p><strong>unique_fields</strong> – List[field..]</p></li>
-<li><p><strong>update_fields</strong> – List[field..]</p></li>
-<li><p><strong>returning_id</strong> – bool</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>saved DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
 </section>
 <section id="sqlalchemy-database-context">
 <h2>Sqlalchemy Database Context<a class="headerlink" href="#sqlalchemy-database-context" title="Permalink to this heading">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pandas_orm.sqlalchemy.session.sqlalchemy_db.</span></span><span class="sig-name descname"><span class="pre">DatabaseSession</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session_scope_func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine_scope_func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession" title="Permalink to this definition">¶</a></dt>
-<dd><p>responsible to handle engine scope and session scope with sqlalchemy frameworke
-Usage:
-In [0]: db = DatabaseSession(url)
-In [1]: with db.session() as session:</p>
-<blockquote>
-<div><p>…:     result = session.execute(‘select * from collaborator where id=144’)</p>
-</div></blockquote>
-<p>In [2]: result.fetchall()
-Out[2]: [(1, u’name name’, u’test test’,…]</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession.engine">
-<span class="sig-name descname"><span class="pre">engine</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession.engine" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>engine scope function context</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession.get_db_session">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_db_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession.get_db_session" title="Permalink to this definition">¶</a></dt>
-<dd><p>initialize global variable singleton</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession.session">
-<span class="sig-name descname"><span class="pre">session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pandas_orm.sqlalchemy.session.sqlalchemy_db.DatabaseSession.session" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>session scope function context</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from pandas_orm.sqlalchemy.session.sqlalchemy_db import DatabaseSession</span>
 
 <span class="go">In [0]: db = DatabaseSession(url)</span>
